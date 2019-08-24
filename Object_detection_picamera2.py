@@ -1,7 +1,5 @@
 ######## Picamera Object Detection Using Tensorflow Classifier #########
-#
-# Author: Evan Juras
-# Date: 4/15/18
+
 # Description: 
 # This program uses a TensorFlow classifier to perform object detection.
 # It loads the classifier uses it to perform object detection on a Picamera feed.
@@ -9,16 +7,6 @@
 # the Picamera. It also can be used with a webcam by adding "--usbcam"
 # when executing this script from the terminal.
 
-## Some of the code is copied from Google's example at
-## https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb
-
-## and some is copied from Dat Tran's example at
-## https://github.com/datitran/object_detector_app/blob/master/object_detection_app.py
-
-## but I changed it to make it more understandable to me.
-
-
-# Import packages
 import os
 import cv2
 import time
@@ -32,8 +20,6 @@ import sys
 # Set up camera constants
 IM_WIDTH = 1280
 IM_HEIGHT = 720
-#IM_WIDTH = 640    Use smaller resolution for
-#IM_HEIGHT = 480   slightly faster framerate
 
 camera_type = 'picamera'
 
@@ -113,18 +99,18 @@ if camera_type == 'picamera':
     camera.capture(rawCapture, format="bgr")
     image = rawCapture.array
         
-        # Acquire frame and expand frame dimensions to have shape: [1, None, None, 3]
-        # i.e. a single-column array, where each item in the column has the pixel RGB value
+    # Acquire frame and expand frame dimensions to have shape: [1, None, None, 3]
+    # i.e. a single-column array, where each item in the column has the pixel RGB value
     frame = np.copy(image)
     frame.setflags(write=1)
     frame_expanded = np.expand_dims(frame, axis=0)
 
-        # Perform the actual detection by running the model with the image as input
+    # Perform the actual detection by running the model with the image as input
     (boxes, scores, classes, num) = sess.run(
          [detection_boxes, detection_scores, detection_classes, num_detections],
         feed_dict={image_tensor: frame_expanded})
 
-        # Draw the results of the detection (aka 'visulaize the results')
+    # Draw the results of the detection (aka 'visulaize the results')
     vis_util.visualize_boxes_and_labels_on_image_array(
             frame,
             np.squeeze(boxes),
@@ -134,11 +120,11 @@ if camera_type == 'picamera':
             use_normalized_coordinates=True,
             line_thickness=8,min_score_thresh = 0.4)
 
-        # All the results have been drawn on the frame, so it's time to display it.
+    # All the results have been drawn on the frame, so it's time to display it.
     r = 600.0 / frame.shape[1]
     dim = (600, int(frame.shape[0] * r))
  
-# perform the actual resizing of the image and show it
+    # perform the actual resizing of the image and show it
     resized = cv2.resize(frame, dim, interpolation = cv2.INTER_AREA)
     cv2.imshow("Object Detector", resized)
     cv2.waitKey(0)
