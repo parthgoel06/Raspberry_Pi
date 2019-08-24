@@ -128,12 +128,19 @@ if camera_type == 'picamera':
     resized = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
     cv2.imshow("Object Detector", resized)
 
+    cv2.waitKey(0)
+    rawCapture.truncate(0)
+
     #Print detected classes on terminal
     ls = [category_index.get(value) for index, value in enumerate(classes[0]) if scores[0, index] > 0.5]
     s = ""
     for i, j in enumerate(ls):
         s += j['name'] + " "
     print(s)
+
+    camera.close()
+
+cv2.destroyAllWindows()
 
 ###TEXT TO SPEECH###
     from subprocess import call
@@ -149,9 +156,5 @@ if camera_type == 'picamera':
     call([cmd_beg + cmd_out + s + cmd_end], shell=True)
     os.system("omxplayer ~/Desktop/Text.wav")
 
-    cv2.waitKey(0)
-    rawCapture.truncate(0)
-    camera.close()
 
-cv2.destroyAllWindows()
 
