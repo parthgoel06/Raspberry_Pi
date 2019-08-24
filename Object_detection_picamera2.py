@@ -120,6 +120,28 @@ if camera_type == 'picamera':
             use_normalized_coordinates=True,
             line_thickness=8,min_score_thresh = 0.4)
 
+    # Print detected classes on terminal
+    ls = [category_index.get(value) for index, value in enumerate(classes[0]) if scores[0, index] > 0.5]
+    s = ""
+    for i, j in enumerate(ls):
+        s += j['name'] + " "
+    print(s)
+
+    ###TEXT TO SPEECH###
+    if len(s) > 0:
+        from subprocess import call
+
+        cmd_beg = 'espeak -v en -k5 -s120 '
+        cmd_end = ' | aplay /home/pi/Desktop/Text.wav  2>/dev/null'  # To play back the stored .wav file and to dump the std errors to /dev/null
+        cmd_out = '--stdout > /home/pi/Desktop/Text.wav '  # To store the voice file
+
+        # Replacing ' ' with '_' to identify words in the text entered
+        s = s.replace(' ', '_')
+
+        # Calls the Espeak TTS Engine to read aloud a Text
+        call([cmd_beg + cmd_out + s + cmd_end], shell=True)
+        os.system("omxplayer ~/Desktop/Text.wav")
+
     # All the results have been drawn on the frame, so it's time to display it.
     r = 600.0 / frame.shape[1]
     dim = (600, int(frame.shape[0] * r))
@@ -131,29 +153,7 @@ if camera_type == 'picamera':
     cv2.waitKey(0)
     rawCapture.truncate(0)
 
-    # Print detected classes on terminal
-    ls = [category_index.get(value) for index, value in enumerate(classes[0]) if scores[0, index] > 0.5]
-    s = ""
-    for i, j in enumerate(ls):
-        s += j['name'] + " "
-    print(s)
-
     camera.close()
 
 cv2.destroyAllWindows()
 
-
-###TEXT TO SPEECH###
-if len(s) > 0:
-    from subprocess import call
-
-    cmd_beg = 'espeak -v en -k5 -s120 '
-    cmd_end = ' | aplay /home/pi/Desktop/Text.wav  2>/dev/null'  # To play back the stored .wav file and to dump the std errors to /dev/null
-    cmd_out = '--stdout > /home/pi/Desktop/Text.wav '  # To store the voice file
-
-    # Replacing ' ' with '_' to identify words in the text entered
-    s = s.replace(' ', '_')
-
-    # Calls the Espeak TTS Engine to read aloud a Text
-    call([cmd_beg + cmd_out + s + cmd_end], shell=True)
-    os.system("omxplayer ~/Desktop/Text.wav")
