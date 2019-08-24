@@ -131,7 +131,11 @@ if camera_type == 'picamera':
     
     rawCapture.truncate(0)
     
-    print([category_index.get(value) for index,value in enumerate(classes[0]) if scores[0,index] > 0.5])
+    ls = [category_index.get(value) for index, value in enumerate(classes[0]) if scores[0, index] > 0.5]
+    s = ""
+    for i, j in enumerate(ls):
+        s += j['name'] + " "
+    print(s)
 
     camera.close()
 
