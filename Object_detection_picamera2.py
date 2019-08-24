@@ -154,3 +154,4 @@ s = s.replace(' ', '_')
 
 #Calls the Espeak TTS Engine to read aloud a Text
 call([cmd_beg+cmd_out+s+cmd_end], shell=True)
+os.system("omxplayer ~/Desktop/Text.wav")
