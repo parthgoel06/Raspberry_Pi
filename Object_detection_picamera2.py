@@ -92,7 +92,7 @@ if camera_type == 'picamera':
     camera = PiCamera()
     camera.resolution = (IM_WIDTH,IM_HEIGHT)
     camera.framerate = 10
-    rawCapture = PiRGBArray(camera, size=(IM_WIDTH,IM_HEIGHT))
+    rawCapture = PiRGBArray(camera, size=(IM_WIDTH, IM_HEIGHT))
     rawCapture.truncate(0)
 
     time.sleep(2)
@@ -108,7 +108,7 @@ if camera_type == 'picamera':
     # Perform the actual detection by running the model with the image as input
     (boxes, scores, classes, num) = sess.run(
          [detection_boxes, detection_scores, detection_classes, num_detections],
-        feed_dict={image_tensor: frame_expanded})
+         feed_dict={image_tensor: frame_expanded})
 
     # Draw the results of the detection (aka 'visulaize the results')
     vis_util.visualize_boxes_and_labels_on_image_array(
@@ -131,7 +131,7 @@ if camera_type == 'picamera':
     cv2.waitKey(0)
     rawCapture.truncate(0)
 
-    #Print detected classes on terminal
+    # Print detected classes on terminal
     ls = [category_index.get(value) for index, value in enumerate(classes[0]) if scores[0, index] > 0.5]
     s = ""
     for i, j in enumerate(ls):
@@ -142,19 +142,18 @@ if camera_type == 'picamera':
 
 cv2.destroyAllWindows()
 
+
 ###TEXT TO SPEECH###
-from subprocess import call
+if len(s) > 0:
+    from subprocess import call
 
-cmd_beg = 'espeak -v en -k5 -s120 '
-cmd_end = ' | aplay /home/pi/Desktop/Text.wav  2>/dev/null'  # To play back the stored .wav file and to dump the std errors to /dev/null
-cmd_out = '--stdout > /home/pi/Desktop/Text.wav '  # To store the voice file
+    cmd_beg = 'espeak -v en -k5 -s120 '
+    cmd_end = ' | aplay /home/pi/Desktop/Text.wav  2>/dev/null'  # To play back the stored .wav file and to dump the std errors to /dev/null
+    cmd_out = '--stdout > /home/pi/Desktop/Text.wav '  # To store the voice file
 
-# Replacing ' ' with '_' to identify words in the text entered
-s = s.replace(' ', '_')
+    # Replacing ' ' with '_' to identify words in the text entered
+    s = s.replace(' ', '_')
 
-# Calls the Espeak TTS Engine to read aloud a Text
-call([cmd_beg + cmd_out + s + cmd_end], shell=True)
-os.system("omxplayer ~/Desktop/Text.wav")
-
-
-
+    # Calls the Espeak TTS Engine to read aloud a Text
+    call([cmd_beg + cmd_out + s + cmd_end], shell=True)
+    os.system("omxplayer ~/Desktop/Text.wav")
