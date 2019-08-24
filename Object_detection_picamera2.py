@@ -143,18 +143,18 @@ if camera_type == 'picamera':
 cv2.destroyAllWindows()
 
 ###TEXT TO SPEECH###
-    from subprocess import call
+from subprocess import call
 
-    cmd_beg = 'espeak -v en -k5 -s120 '
-    cmd_end = ' | aplay /home/pi/Desktop/Text.wav  2>/dev/null'  # To play back the stored .wav file and to dump the std errors to /dev/null
-    cmd_out = '--stdout > /home/pi/Desktop/Text.wav '  # To store the voice file
+cmd_beg = 'espeak -v en -k5 -s120 '
+cmd_end = ' | aplay /home/pi/Desktop/Text.wav  2>/dev/null'  # To play back the stored .wav file and to dump the std errors to /dev/null
+cmd_out = '--stdout > /home/pi/Desktop/Text.wav '  # To store the voice file
 
-    # Replacing ' ' with '_' to identify words in the text entered
-    s = s.replace(' ', '_')
+# Replacing ' ' with '_' to identify words in the text entered
+s = s.replace(' ', '_')
 
-    # Calls the Espeak TTS Engine to read aloud a Text
-    call([cmd_beg + cmd_out + s + cmd_end], shell=True)
-    os.system("omxplayer ~/Desktop/Text.wav")
+# Calls the Espeak TTS Engine to read aloud a Text
+call([cmd_beg + cmd_out + s + cmd_end], shell=True)
+os.system("omxplayer ~/Desktop/Text.wav")
 
 
 
