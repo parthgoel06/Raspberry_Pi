@@ -1,5 +1,6 @@
 from pad4pi import rpi_gpio
 import time
+import os
 
 # Setup Keypad
 KEYPAD = [
@@ -22,7 +23,9 @@ keypad = factory.create_keypad(keypad=KEYPAD, row_pins=ROW_PINS, col_pins=COL_PI
 #keypad.cleanup()
 
 def printKey(key):
-  print(key)
+    #print(key)
+    if key=='A':
+        os.system("python3 Object_detection_picamera2.py")
 
 # printKey will be called each time a keypad button is pressed
 keypad.registerKeyPressHandler(printKey)
