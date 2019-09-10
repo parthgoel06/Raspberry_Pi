@@ -35,7 +35,7 @@ def printKey(key):
         a = a.replace(' ', '_')
 
         # Calls the Espeak TTS Engine to read aloud a Text
-        call([cmd_beg + cmd_out + s + cmd_end], shell=True)
+        call([cmd_beg + cmd_out + a + cmd_end], shell=True)
         os.system("omxplayer ~/Desktop/obj_detect.wav")
 
         os.system("python3 Object_detection_picamera2.py")
