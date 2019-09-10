@@ -150,7 +150,7 @@ if camera_type == 'picamera':
     resized = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
     cv2.imshow("Object Detector", resized)
 
-    cv2.waitKey(3000)
+    cv2.waitKey(5000)
     rawCapture.truncate(0)
 
     camera.close()
