@@ -42,7 +42,7 @@ def printKey(key):
 
         os.system("python3 Object_detection_picamera2.py")
 
-        cv2.waitKey('0')
+        cv2.waitKey(int('0'))
         cmd_beg = 'espeak -v en -k5 -s120 '
         cmd_end = ' | aplay /home/pi/Desktop/obj_detect.wav  2>/dev/null'  # To play back the stored .wav file and to dump the std errors to /dev/null
         cmd_out = '--stdout > /home/pi/Desktop/obj_detect.wav '  # To store the voice file
@@ -54,7 +54,7 @@ def printKey(key):
         # Calls the Espeak TTS Engine to read aloud a Text
         call([cmd_beg + cmd_out + a + cmd_end], shell=True)
         os.system("omxplayer ~/Desktop/obj_detect.wav")
-        Object_detection_picamera2.rawCapture.truncate('0')
+        Object_detection_picamera2.rawCapture.truncate(int('0'))
         Object_detection_picamera2.camera.close()
 
 # printKey will be called each time a keypad button is pressed
