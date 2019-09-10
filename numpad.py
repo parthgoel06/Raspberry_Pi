@@ -24,7 +24,7 @@ keypad = factory.create_keypad(keypad=KEYPAD, row_pins=ROW_PINS, col_pins=COL_PI
 #keypad.cleanup()
 
 def printKey(key):
-    #print(key)
+    print(key)
     if key=='A':
         cmd_beg = 'espeak -v en -k5 -s120 '
         cmd_end = ' | aplay /home/pi/Desktop/obj_detect.wav  2>/dev/null'  # To play back the stored .wav file and to dump the std errors to /dev/null
@@ -39,6 +39,7 @@ def printKey(key):
         os.system("omxplayer ~/Desktop/obj_detect.wav")
 
         os.system("python3 Object_detection_picamera2.py")
+
 
 # printKey will be called each time a keypad button is pressed
 keypad.registerKeyPressHandler(printKey)
