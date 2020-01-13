@@ -10,6 +10,8 @@ import imutils
 import pickle
 import time
 import cv2
+from picamera.array import PiRGBArray
+from picamera import PiCamera
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
