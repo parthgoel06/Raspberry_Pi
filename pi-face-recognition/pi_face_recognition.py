@@ -115,9 +115,6 @@ for encoding in encodings:
 			cmd_end = ' | aplay /home/pi/Desktop/audio.wav  2>/dev/null'  # To play back the stored .wav file and to dump the std errors to /dev/null
 			cmd_out = '--stdout > /home/pi/Desktop/audio.wav '  # To store the voice file
 
-			# Replacing ' ' with '_' to identify words in the text entered
-			s = s.replace(' ', '_')
-
 			# Calls the Espeak TTS Engine to read aloud a Text
 			call([cmd_beg + cmd_out + name + cmd_end], shell=True)
 			os.system("omxplayer ~/Desktop/audio.wav")
