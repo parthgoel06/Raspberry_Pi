@@ -122,7 +122,7 @@ for ((top, right, bottom, left), name) in zip(boxes, names):
 print(name)
 # display the image to our screen
 cv2.imshow("Frame", frame)
-key = cv2.waitKey(1) & 0xFF
+key = cv2.waitKey(5000) & 0xFF
 
 # if the `q` key was pressed, break from the loop
 
