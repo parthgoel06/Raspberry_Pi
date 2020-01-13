@@ -107,7 +107,7 @@ for encoding in encodings:
 		# of votes (note: in the event of an unlikely tie Python
 		# will select first entry in the dictionary)
 		name = max(counts, key=counts.get)
-	
+		print(name)
 	# update the list of names
 	names.append(name)
 
@@ -119,7 +119,7 @@ for ((top, right, bottom, left), name) in zip(boxes, names):
 	y = top - 15 if top - 15 > 15 else top + 15
 	cv2.putText(frame, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
 		0.75, (0, 255, 0), 2)
-print(name)
+
 # display the image to our screen
 cv2.imshow("Frame", frame)
 key = cv2.waitKey(5000) & 0xFF
