@@ -37,8 +37,8 @@ def printKey(key):
         # Calls the Espeak TTS Engine to read aloud a Text
         call([cmd_beg + cmd_out + a + cmd_end], shell=True)
         os.system("omxplayer ~/Desktop/audio.wav")
-
-        os.system("python3 ~/tensorflow1/models/research/object_detection/Object_detection_picamera2.py")
+        os.system("cd ~/tensorflow1/models/research/object_detection")
+        os.system("python3 Object_detection_picamera2.py")
 
     if key=='B':
         cmd_beg = 'espeak -v en -k5 -s120 '
@@ -52,8 +52,8 @@ def printKey(key):
         # Calls the Espeak TTS Engine to read aloud a Text
         call([cmd_beg + cmd_out + a + cmd_end], shell=True)
         os.system("omxplayer ~/Desktop/audio.wav")
-
-        os.system("python3 ~/Desktop/Raspberry_Pi/pi-face-recognition/pi_face_recognition.py --cascade haarcascade_frontalface_default.xml \--encodings encodings.pickle")
+        os.system("cd ~/Desktop/Raspberry_Pi/pi-face-recognition")
+        os.system("python3 pi_face_recognition.py --cascade haarcascade_frontalface_default.xml \--encodings encodings.pickle")
 
 
 
