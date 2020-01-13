@@ -7,9 +7,11 @@ from imutils.video import FPS
 import face_recognition
 import argparse
 import imutils
+import os
 import pickle
 import time
 import cv2
+import numpy as np
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 
