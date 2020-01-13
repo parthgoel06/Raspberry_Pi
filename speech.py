@@ -12,3 +12,4 @@ text = text.replace(' ', '_')
 
 #Calls the Espeak TTS Engine to read aloud a Text
 call([cmd_beg+cmd_out+text+cmd_end], shell=True)
+print('aefaljbjd')
