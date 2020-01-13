@@ -27,8 +27,8 @@ def printKey(key):
     print(key)
     if key=='A':
         cmd_beg = 'espeak -v en -k5 -s120 '
-        cmd_end = ' | aplay /home/pi/Desktop/obj_detect.wav  2>/dev/null'  # To play back the stored .wav file and to dump the std errors to /dev/null
-        cmd_out = '--stdout > /home/pi/Desktop/obj_detect.wav '  # To store the voice file
+        cmd_end = ' | aplay /home/pi/Desktop/audio.wav  2>/dev/null'  # To play back the stored .wav file and to dump the std errors to /dev/null
+        cmd_out = '--stdout > /home/pi/Desktop/audio.wav '  # To store the voice file
 
         # Replacing ' ' with '_' to identify words in the text entered
         a = 'Starting Object Detection'
@@ -36,9 +36,24 @@ def printKey(key):
 
         # Calls the Espeak TTS Engine to read aloud a Text
         call([cmd_beg + cmd_out + a + cmd_end], shell=True)
-        os.system("omxplayer ~/Desktop/obj_detect.wav")
+        os.system("omxplayer ~/Desktop/audio.wav")
 
-        os.system("python3 Object_detection_picamera2.py")
+        os.system("python3 ~/tensorflow1/models/research/object_detection/Object_detection_picamera2.py")
+
+    if key=='B':
+        cmd_beg = 'espeak -v en -k5 -s120 '
+        cmd_end = ' | aplay /home/pi/Desktop/audio.wav  2>/dev/null'  # To play back the stored .wav file and to dump the std errors to /dev/null
+        cmd_out = '--stdout > /home/pi/Desktop/audio.wav '  # To store the voice file
+
+        # Replacing ' ' with '_' to identify words in the text entered
+        a = 'Starting Face Recognition'
+        a = a.replace(' ', '_')
+
+        # Calls the Espeak TTS Engine to read aloud a Text
+        call([cmd_beg + cmd_out + a + cmd_end], shell=True)
+        os.system("omxplayer ~/Desktop/audio.wav")
+
+        os.system("python3 ~/Desktop/Raspberry_Pi/pi-face-recognition/pi_face_recognition.py --cascade haarcascade_frontalface_default.xml \--encodings encodings.pickle")
 
 
 
