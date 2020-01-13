@@ -13,6 +13,9 @@ import cv2
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 
+# Set up camera constants
+IM_WIDTH = 1280
+IM_HEIGHT = 720
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-c", "--cascade", required=True,
