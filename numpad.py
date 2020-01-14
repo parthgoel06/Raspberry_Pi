@@ -3,6 +3,19 @@ import time
 import os
 from subprocess import call
 
+
+cmd_beg = 'espeak -v en -k5 -s120 '
+cmd_end = ' | aplay /home/pi/Desktop/audio.wav  2>/dev/null'  # To play back the stored .wav file and to dump the std errors to /dev/null
+cmd_out = '--stdout > /home/pi/Desktop/audio.wav '  # To store the voice file
+
+# Replacing ' ' with '_' to identify words in the text entered
+a = 'Hello I am here to assit you'
+a = a.replace(' ', '_')
+
+# Calls the Espeak TTS Engine to read aloud a Text
+call([cmd_beg + cmd_out + a + cmd_end], shell=True)
+os.system("omxplayer ~/Desktop/audio.wav")
+
 # Setup Keypad
 KEYPAD = [
         ["1","2","3","A"],
