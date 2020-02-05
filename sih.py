@@ -61,7 +61,9 @@ ffmpeg_extract_subclip("output.mp4", time_diff_1-10, time_diff_1+10, targetname=
 #upload vid file
 cli = Client('AkNi4zBJJTfmBeR8aAK6rz')
 filelink = cli.upload(filepath='test.mp4')
-print(filelink.url)
+#print(filelink.url)
+url = str(filelink.url)
+print(url)
 
 #send sms through gsm module
 SERIAL_PORT = "/dev/ttyS0"
@@ -78,7 +80,7 @@ print("sms1 sent")
 ser.write(b"AT+CMGF=1\r")
 time.sleep(3)
 ser.write(b'AT+CMGS="9990847111"\r')
-msg2 = bytes(f'{filelink.url}','utf-8')
+msg2 = bytes(f'{url}','utf-8')
 time.sleep(3)
 ser.write(msg2+six.b(chr(26)))
 time.sleep(3)
