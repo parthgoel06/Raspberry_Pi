@@ -28,26 +28,28 @@ print('rrt')
 kp = keypad(columnCount = 3)
 kp.getKey()
 print('yo')
-with picamera.PiCamera() as camera:
-    print('yo1')
-    start_time_1 = time.time()
-    while(True):
-        camera.start_recording("output.h264")
-        time_diff_1 = time.time() - start_time_1
-        if GPIO.input(16)==0:
-            a = 'An accident has been detected you have ten seconds to cancel the S O S request'
-            a = a.replace(' ', '_')
-            call([cmd_beg + cmd_out + a + cmd_end], shell=True)
-            os.system("omxplayer ~/Desktop/audio.wav")
-            start_time_2 = time.time()
-            while(True):
-                if kp.getKey()=='*':
-                    exit()
-                time_diff_2 = time.time() - start_time_2
-                if time_diff_2 >= 10:
-                    camera.stop_recording()
-                    break
-            break  
+camera = picamera.PiCamera()
+camera.start_preview()
+print('yo1')
+start_time_1 = time.time()
+while(True):
+    camera.start_recording("output.h264")
+    time_diff_1 = time.time() - start_time_1
+    if GPIO.input(16)==0:
+        a = 'An accident has been detected you have ten seconds to cancel the S O S request'
+        a = a.replace(' ', '_')
+        call([cmd_beg + cmd_out + a + cmd_end], shell=True)
+        os.system("omxplayer ~/Desktop/audio.wav")
+        start_time_2 = time.time()
+        while(True):
+            if kp.getKey()=='*':
+                exit()
+            time_diff_2 = time.time() - start_time_2
+            if time_diff_2 >= 10:
+                camera.stop_recording()
+                camera.stop_preview()
+                break
+        break  
 
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 ffmpeg_extract_subclip("output.mp4", time_diff_1-10, time_diff_1+10, targetname="test.mp4")
