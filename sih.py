@@ -3,7 +3,9 @@ from keypad import keypad
 import googlemaps
 from subprocess import call
 import pprint
+import serial
 import time
+import sys
 from time import sleep
 import cv2
 import numpy as np
@@ -13,6 +15,7 @@ import os
 from filestack import Client
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 
+##initialise and vid start
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(16, GPIO.OUT)
@@ -47,22 +50,29 @@ while(True):
                 break
         break  
 
+#h264 to mp4
 command = "MP4Box -add output.h264 output.mp4"
 call([command], shell=True)
 
+#crop 20 secs 
 ffmpeg_extract_subclip("output.mp4", time_diff_1-10, time_diff_1+10, targetname="test.mp4")
 
-
+#upload vid file
 cli = Client('AkNi4zBJJTfmBeR8aAK6rz')
 filelink = cli.upload(filepath='test.mp4')
 print(filelink.url)
 
+#send sms through gsm module
+SERIAL_PORT = "/dev/ttyS0"
+ser = serial.Serial(SERIAL_PORT, baudrate = 9600, timeout = 5)
+a = bytes('AT+CMGF=1\r','utf-8')
+ser.write(a)
+b = bytes('AT+CMGS="9990847111"\r')
+msg = f"This is an EMERGENCY message!!! An accident has occurred at location and immediate medical help is required. Here is a video link of the accident scenario {filelink.url}"
+ser.write(b)
+ser.write(msg+chr(26))
+print("sms sent")
 '''
-##location
-gmaps = googlemaps.Client(key = 'AIzaSyDVCEYkZqhHzB5WUAM8qLFAraOAp4_YZUQ')
-places_result = gmaps.placesmipo_nearby(location = '28.6591,77.3400', open_now = True, keyword = 'hospital', type = 'hospital', rank_by = 'distance')
-pprint.pprint(places_result)
-
 ##call
 import messagebird
 
