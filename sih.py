@@ -11,6 +11,7 @@ from time import sleep
 import cv2
 import numpy as np
 import picamera
+import pl
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 import os
 from filestack import Client
@@ -68,9 +69,9 @@ url = str(filelink.url)
 print(url)
 
 #locate places
-Places.Hospital()
-Places.Police()
-location = Places.long_lat()
+pl.hospital()
+pl.police()
+location = pl.long_lat()
 print(f"LOCATION = {location}")
 
 #call

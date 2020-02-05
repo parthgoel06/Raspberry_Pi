@@ -28,5 +28,3 @@ def Police():
     print(f"Phone Number = {details['result']['formatted_phone_number']}")
     print(f"Address = {details['result']['vicinity']}")  
 
-def long_lat():
-    return('28.647177,77.341185')
