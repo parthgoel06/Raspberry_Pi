@@ -21,15 +21,11 @@ cmd_out = '--stdout > /home/pi/Desktop/sih.wav '
 
 a = 'Welcome user have a safe journey'
 a = a.replace(' ', '_')
-print('rr')
 call([cmd_beg + cmd_out + a + cmd_end], shell=True)
 os.system("omxplayer ~/Desktop/sih.wav")
-print('rrt')
 kp = keypad(columnCount = 3)
 kp.getKey()
-print('yo')
 camera = picamera.PiCamera()
-print('yo1')
 camera.start_recording("output.h264")
 start_time_1 = time.time()
 while(True):
@@ -38,13 +34,16 @@ while(True):
         a = 'An accident has been detected you have ten seconds to cancel the S O S request'
         a = a.replace(' ', '_')
         call([cmd_beg + cmd_out + a + cmd_end], shell=True)
-        os.system("omxplayer ~/Desktop/audio.wav")
+        os.system("omxplayer ~/Desktop/sih.wav")
+        print("yo1")
         start_time_2 = time.time()
         while(True):
+            print("yo2")
             if kp.getKey()=='*':
                 exit()
             time_diff_2 = time.time() - start_time_2
             if time_diff_2 >= 10:
+                print("yo3")
                 camera.stop_recording()
                 break
         break  
