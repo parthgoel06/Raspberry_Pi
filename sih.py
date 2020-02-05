@@ -67,7 +67,7 @@ SERIAL_PORT = "/dev/ttyS0"
 ser = serial.Serial(SERIAL_PORT, baudrate = 9600, timeout = 5)
 a = bytes('AT+CMGF=1\r','utf-8')
 ser.write(a)
-b = bytes('AT+CMGS="9990847111"\r')
+b = bytes('AT+CMGS="9990847111"\r','utf-8')
 msg = f"This is an EMERGENCY message!!! An accident has occurred at location and immediate medical help is required. Here is a video link of the accident scenario {filelink.url}"
 ser.write(b)
 ser.write(msg+chr(26))
