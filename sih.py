@@ -16,7 +16,7 @@ cmd_beg = 'espeak -v en -k5 -s120 '
 cmd_end = ' | aplay /home/pi/Desktop/sih.wav  2>/dev/null'  
 cmd_out = '--stdout > /home/pi/Desktop/sih.wav'
 
-a = 'Welcome user, have a safe journey'
+a = 'Welcome user have a safe journey'
 a = a.replace(' ', '_')
 
 call([cmd_beg + cmd_out + a + cmd_end], shell=True)
@@ -33,7 +33,7 @@ with picamera.PiCamera() as camera:
         camera.start_recording("output.mp4")
         time_diff_1 = time.time() - start_time_1
         if GPIO.input(16)==0:
-            a = 'An accident has been detected, you have ten seconds to cancel the S O S request'
+            a = 'An accident has been detected you have ten seconds to cancel the S O S request'
             a = a.replace(' ', '_')
             call([cmd_beg + cmd_out + a + cmd_end], shell=True)
             os.system("omxplayer ~/Desktop/audio.wav")
