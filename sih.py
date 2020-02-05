@@ -10,6 +10,7 @@ import numpy as np
 from picamera import PiCamera
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 
+GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(16, GPIO.OUT)
 cmd_beg = 'espeak -v en -k5 -s120 '
@@ -22,7 +23,7 @@ a = a.replace(' ', '_')
 call([cmd_beg + cmd_out + a + cmd_end], shell=True)
 os.system("omxplayer ~/Desktop/sih.wav")
 
-GPIO.setwarnings(False)
+#GPIO.setwarnings(False)
 kp = keypad(columnCount = 3)
 kp.getKey()
 print('yo')
