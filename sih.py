@@ -16,7 +16,7 @@ GPIO.setup(16, GPIO.OUT)
 print(GPIO.input(16))
 cmd_beg = 'espeak -v en -k5 -s120 '
 cmd_end = ' | aplay /home/pi/Desktop/sih.wav  2>/dev/null'  
-cmd_out = '--stdout > /home/pi/Desktop/sih.wav'
+cmd_out = '--stdout > /home/pi/Desktop/sih.wav '
 
 a = 'Welcome user have a safe journey'
 a = a.replace(' ', '_')
@@ -24,7 +24,6 @@ print('rr')
 call([cmd_beg + cmd_out + a + cmd_end], shell=True)
 os.system("omxplayer ~/Desktop/sih.wav")
 print('rrt')
-#GPIO.setwarnings(False)
 kp = keypad(columnCount = 3)
 kp.getKey()
 print('yo')
