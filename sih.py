@@ -29,11 +29,10 @@ kp = keypad(columnCount = 3)
 kp.getKey()
 print('yo')
 camera = picamera.PiCamera()
-camera.close()
 print('yo1')
+camera.start_recording("output.h264")
 start_time_1 = time.time()
 while(True):
-    camera.start_recording("output.h264")
     time_diff_1 = time.time() - start_time_1
     if GPIO.input(16)==0:
         a = 'An accident has been detected you have ten seconds to cancel the S O S request'
@@ -47,7 +46,6 @@ while(True):
             time_diff_2 = time.time() - start_time_2
             if time_diff_2 >= 10:
                 camera.stop_recording()
-                camera.stop_preview()
                 break
         break  
 
