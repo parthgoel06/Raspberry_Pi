@@ -16,7 +16,7 @@ cmd_beg = 'espeak -v en -k5 -s120 '
 cmd_end = ' | aplay /home/pi/Desktop/audio.wav  2>/dev/null'  
 cmd_out = '--stdout > /home/pi/Desktop/audio.wav'
 
-a = 'Welcome user, have a safe journey '
+a = 'Welcome user, have a safe journey'
 a = a.replace(' ', '_')
 
 call([cmd_beg + cmd_out + a + cmd_end], shell=True)
