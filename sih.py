@@ -32,20 +32,16 @@ start_time_1 = time.time()
 while(True):
     time_diff_1 = time.time() - start_time_1
     if GPIO.input(16)==0:
-        print("yoasda")
         a = 'An accident has been detected you have ten seconds to cancel the S O S request'
         a = a.replace(' ', '_')
         call([cmd_beg + cmd_out + a + cmd_end], shell=True)
         os.system("omxplayer ~/Desktop/sih.wav")
-        print("yo1")
         start_time_2 = time.time()
         while(True):
-            print("yo2")
             if kp.getKey()=='*':
                 exit()
             time_diff_2 = time.time() - start_time_2
             if time_diff_2 >= 10:
-                print("yo3")
                 camera.stop_recording()
                 break
         break  
@@ -54,7 +50,7 @@ from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 ffmpeg_extract_subclip("output.h264", time_diff_1-10, time_diff_1+10, targetname="test.mp4")
 
 cli = Client('AkNi4zBJJTfmBeR8aAK6rz')
-filelink = cli.upload(filepath=r'test.mp4')
+filelink = cli.upload(filepath='test.mp4')
 print(filelink.url)
 
 '''
