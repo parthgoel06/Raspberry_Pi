@@ -26,6 +26,8 @@ os.system("omxplayer ~/Desktop/sih.wav")
 kp = keypad(columnCount = 3)
 kp.getKey()
 camera = picamera.PiCamera()
+camera.close()
+camera.open()
 camera.start_recording("output.h264")
 start_time_1 = time.time()
 while(True):
