@@ -7,8 +7,11 @@ import time
 from time import sleep
 import cv2
 import numpy as np
+from picamera import PiCamera
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(16, GPIO.OUT)
 cmd_beg = 'espeak -v en -k5 -s120 '
 cmd_end = ' | aplay /home/pi/Desktop/audio.wav  2>/dev/null'  
 cmd_out = '--stdout > /home/pi/Desktop/audio.wav'
@@ -22,21 +25,13 @@ os.system("omxplayer ~/Desktop/audio.wav")
 GPIO.setwarnings(False)
 kp = keypad(columnCount = 3)
 kp.getKey()
-#VideoCapture
-cap = cv2.VideoCapture(0)
 
-# Define the codec and create VideoWriter object
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
-out = cv2.VideoWriter('output.avi',fourcc, 30.0, (640,480))
-
-start_time_1 = time.time()
-while(cap.isOpened()):
-    ret, frame = cap.read()
-    if ret==True:
-        out.write(frame)
-        cv2.imshow('frame',frame)
+with picamera.PiCamera() as camera:
+    start_time_1 = time.time()
+    while(True):
+        camera.start_recording("output.mp4")
         time_diff_1 = time.time() - start_time_1
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        if GPIO.input(16)==0:
             a = 'An accident has been detected, you have ten seconds to cancel the S O S request'
             a = a.replace(' ', '_')
             call([cmd_beg + cmd_out + a + cmd_end], shell=True)
@@ -46,21 +41,13 @@ while(cap.isOpened()):
                 if kp.getKey()=='*':
                     exit()
                 time_diff_2 = time.time() - start_time_2
-                ret, frame = cap.read()
-                out.write(frame)
                 if time_diff_2 >= 10:
+                    camera.stop_recording()
                     break
-            break
-    else:
-        break
-
-# Release everything if job is finished
-cap.release()
-out.release()
-cv2.destroyAllWindows()
+            break  
 
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
-ffmpeg_extract_subclip("output.avi", time_diff_1-10, time_diff_1+10, targetname="test.mp4")
+ffmpeg_extract_subclip("output.mp4", time_diff_1-10, time_diff_1+10, targetname="test.mp4")
 
 '''
 ##location
