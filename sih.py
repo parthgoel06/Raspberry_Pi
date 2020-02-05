@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 from keypad import keypad
 import googlemaps
 from subprocess import call
+import messagebird
 import pprint
 import serial
 import time
@@ -15,6 +16,7 @@ import os
 from filestack import Client
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 import six
+import Places
 
 ##initialise and vid start
 GPIO.setwarnings(False)
@@ -37,7 +39,7 @@ start_time_1 = time.time()
 while(True):
     time_diff_1 = time.time() - start_time_1
     if GPIO.input(16)==0:
-        a = 'An accident has been detected you have ten seconds to cancel the S O S request'
+        a = 'An accident has been detected you have ten seconds to cancel the S O S request by pressing star'
         a = a.replace(' ', '_')
         call([cmd_beg + cmd_out + a + cmd_end], shell=True)
         os.system("omxplayer ~/Desktop/sih.wav")
@@ -65,13 +67,27 @@ filelink = cli.upload(filepath='test.mp4')
 url = str(filelink.url)
 print(url)
 
+#locate places
+Places.Hospital()
+Places.Police()
+location = Places.long_lat()
+print(f"LOCATION = {location}")
+
+#call
+client = messagebird.Client('TKDmtvkphouI9Su9nY9IxRot5')
+try:
+    msg = client.voice_message_create('+919899013114', 'Emergency detected please check message', { 'voice' : 'male' })
+    print(msg.__dict__)
+except messagebird.client.ErrorException as e:
+    for error in e.errors:
+        print(error)
 #send sms through gsm module
 SERIAL_PORT = "/dev/ttyS0"
 ser = serial.Serial(SERIAL_PORT,baudrate=9600,timeout=5)
 ser.write(b"AT+CMGF=1\r")
 time.sleep(3)
-ser.write(b'AT+CMGS="9990847111"\r')
-msg1 = b'location'
+ser.write(b'AT+CMGS="9899013114"\r')
+msg1 = bytes('Location = '+location,'utf-8')
 time.sleep(3)
 ser.write(msg1+six.b(chr(26)))
 time.sleep(3)
@@ -79,35 +95,12 @@ print("sms1 sent")
 
 ser.write(b"AT+CMGF=1\r")
 time.sleep(3)
-ser.write(b'AT+CMGS="9990847111"\r')
-msg2 = bytes(url,'utf-8')
+ser.write(b'AT+CMGS="9899013114"\r')
+msg2 = bytes('video link = '+url,'utf-8')
 time.sleep(3)
 ser.write(msg2+six.b(chr(26)))
 time.sleep(3)
 print("sms2 sent")
 
-'''
-##call
-import messagebird
 
-client = messagebird.Client('4ScsLLOaUc6fq7FzC2VjsKLDa')
-try:
-    msg = client.voice_message_create('+919990847111', 'hi parth', { 'voice' : 'male' })
-    print(msg.__dict__)
-except messagebird.client.ErrorException as e:
-    for error in e.errors:
-        print(error)
-
-##sms
-import requests
-url = "https://www.fast2sms.com/dev/bulk"
-payload = "sender_id=FSTSMS&message=test&language=english&route=p&numbers=9990847111"
-headers = {
-'authorization': "EF0M2fb37SOQzAU4hNI1WrunYdtjopLwilqekgcyaBPxJX85HDLN6GxSiRJknMmwa12ApDlfhsZFtzT9",
-'Content-Type': "application/x-www-form-urlencoded",
-'Cache-Control': "no-cache",
-}
-response = requests.request("POST", url, data=payload, headers=headers)
-print(response.text)
-'''
 
