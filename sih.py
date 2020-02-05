@@ -13,14 +13,14 @@ from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(16, GPIO.OUT)
 cmd_beg = 'espeak -v en -k5 -s120 '
-cmd_end = ' | aplay /home/pi/Desktop/audio.wav  2>/dev/null'  
-cmd_out = '--stdout > /home/pi/Desktop/audio.wav'
+cmd_end = ' | aplay /home/pi/Desktop/sih.wav  2>/dev/null'  
+cmd_out = '--stdout > /home/pi/Desktop/sih.wav'
 
 a = 'Welcome user, have a safe journey'
 a = a.replace(' ', '_')
 
 call([cmd_beg + cmd_out + a + cmd_end], shell=True)
-os.system("omxplayer ~/Desktop/audio.wav")
+os.system("omxplayer ~/Desktop/sih.wav")
 
 GPIO.setwarnings(False)
 kp = keypad(columnCount = 3)
