@@ -7,7 +7,7 @@ import time
 from time import sleep
 import cv2
 import numpy as np
-from picamera import PiCamera
+import picamera
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 import os
 
