@@ -78,7 +78,7 @@ print("sms1 sent")
 ser.write(b"AT+CMGF=1\r")
 time.sleep(3)
 ser.write(b'AT+CMGS="9990847111"\r')
-msg2 = b'{filelink.url}'
+msg2 = b'{}'.format(filelink.url)
 time.sleep(3)
 ser.write(msg2+six.b(chr(26)))
 time.sleep(3)
