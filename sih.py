@@ -25,8 +25,9 @@ os.system("omxplayer ~/Desktop/audio.wav")
 GPIO.setwarnings(False)
 kp = keypad(columnCount = 3)
 kp.getKey()
-
+print('yo')
 with picamera.PiCamera() as camera:
+    print('yo1')
     start_time_1 = time.time()
     while(True):
         camera.start_recording("output.mp4")
