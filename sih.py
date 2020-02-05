@@ -67,15 +67,21 @@ print(filelink.url)
 SERIAL_PORT = "/dev/ttyS0"
 ser = serial.Serial(SERIAL_PORT,baudrate=9600,timeout=5)
 ser.write(b"AT+CMGF=1\r")
+time.sleep(3)
 ser.write(b'AT+CMGS="9990847111"\r')
-msg1 = b'This is an EMERGENCY message!!! An accident has occurred at location and immediate medical help is required.'
+msg1 = b'location'
+time.sleep(3)
 ser.write(msg1+six.b(chr(26)))
+time.sleep(3)
 print("sms1 sent")
 
 ser.write(b"AT+CMGF=1\r")
+time.sleep(3)
 ser.write(b'AT+CMGS="9990847111"\r')
-msg2 = b'Here is a video link of the accident scenario {filelink.url}'
+msg2 = b'{filelink.url}'
+time.sleep(3)
 ser.write(msg2+six.b(chr(26)))
+time.sleep(3)
 print("sms2 sent")
 
 '''
