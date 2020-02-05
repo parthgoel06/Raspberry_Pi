@@ -70,7 +70,7 @@ ser.write(a)
 b = bytes('AT+CMGS="9990847111"\r','utf-8')
 msg = bytes(f'This is an EMERGENCY message!!! An accident has occurred at location and immediate medical help is required. Here is a video link of the accident scenario {filelink.url}','utf-8')
 ser.write(b)
-ser.write(msg+chr(26))
+ser.write(msg)
 print("sms sent")
 '''
 ##call
