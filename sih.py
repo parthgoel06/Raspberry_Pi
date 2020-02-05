@@ -9,6 +9,7 @@ import cv2
 import numpy as np
 from picamera import PiCamera
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
+import os
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
