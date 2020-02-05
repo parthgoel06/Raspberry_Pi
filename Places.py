@@ -2,7 +2,7 @@ import googlemaps
 import pprint
 import time
 
-gmaps = googlemaps.Client(key = 'AIzaSyDVCEYkZqhHzB5WUAM8qLFAraOAp4_YZUQ')
+gmaps = googlemaps.Client(key = 'AIzaSyB-WtU5RjSQvB8FlP--duBlg1eAB1lYNDc')
 
 def Hospital():
     places_result_hospital = gmaps.places_nearby(location = '28.647177,77.341185', open_now = True, keyword = 'hospital', type = 'hospital', rank_by = 'distance')
