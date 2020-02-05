@@ -47,7 +47,11 @@ while(True):
         break  
 
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
-ffmpeg_extract_subclip("output.h264", time_diff_1-10, time_diff_1+10, targetname="test.mp4")
+ffmpeg_extract_subclip("output.h264", time_diff_1-10, time_diff_1+10, targetname="test.h264")
+
+command = "MP4Box -add test.h264 test.mp4"
+call([command], shell=True)
+print("vid conv")
 
 cli = Client('AkNi4zBJJTfmBeR8aAK6rz')
 filelink = cli.upload(filepath='test.mp4')
