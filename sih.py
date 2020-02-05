@@ -13,6 +13,7 @@ from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(16, GPIO.OUT)
+print(GPIO.input(16))
 cmd_beg = 'espeak -v en -k5 -s120 '
 cmd_end = ' | aplay /home/pi/Desktop/sih.wav  2>/dev/null'  
 cmd_out = '--stdout > /home/pi/Desktop/sih.wav'
