@@ -50,7 +50,7 @@ while(True):
         break  
 
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
-ffmpeg_extract_subclip("output.mp4", time_diff_1-10, time_diff_1+10, targetname="test.mp4")
+ffmpeg_extract_subclip("output.h264", time_diff_1-10, time_diff_1+10, targetname="test.mp4")
 
 '''
 ##location
