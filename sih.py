@@ -29,7 +29,7 @@ kp = keypad(columnCount = 3)
 kp.getKey()
 print('yo')
 camera = picamera.PiCamera()
-camera.start_preview()
+camera.close()
 print('yo1')
 start_time_1 = time.time()
 while(True):
