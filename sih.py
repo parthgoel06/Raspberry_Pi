@@ -65,13 +65,22 @@ print(filelink.url)
 #send sms through gsm module
 SERIAL_PORT = "/dev/ttyS0"
 ser = serial.Serial(SERIAL_PORT, baudrate = 9600, timeout = 5)
-a = bytes('AT+CMGF=1\r','utf-8')
-ser.write(a)
-b = bytes('AT+CMGS="9990847111"\r','utf-8')
-msg = bytes(f'This is an EMERGENCY message!!! An accident has occurred at location and immediate medical help is required. Here is a video link of the accident scenario {filelink.url}','utf-8')
-ser.write(b)
-ser.write(msg)
-print("sms sent")
+a1 = bytes('AT+CMGF=1\r','utf-8')
+ser.write(a1)
+b1 = bytes('AT+CMGS="9899013114"\r','utf-8')
+msg1 = bytes(f'This is an EMERGENCY message!!! An accident has occurred at location and immediate medical help is required.','utf-8')
+ser.write(b1)
+ser.write(msg1)
+print("sms1 sent")
+
+a2 = bytes('AT+CMGF=1\r','utf-8')
+ser.write(a2)
+b2 = bytes('AT+CMGS="9899013114"\r','utf-8')
+msg2 = bytes(f'Here is a video link of the accident scenario {filelink.url}','utf-8')
+ser.write(b2)
+ser.write(msg2)
+print("sms2 sent")
+
 '''
 ##call
 import messagebird
