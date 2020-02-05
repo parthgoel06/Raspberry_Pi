@@ -10,6 +10,7 @@ import numpy as np
 import picamera
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 import os
+from filestack import Client
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
@@ -51,6 +52,10 @@ while(True):
 
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 ffmpeg_extract_subclip("output.h264", time_diff_1-10, time_diff_1+10, targetname="test.mp4")
+
+cli = Client('AkNi4zBJJTfmBeR8aAK6rz')
+filelink = cli.upload(filepath=r'test.mp4')
+print(filelink.url)
 
 '''
 ##location
