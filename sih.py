@@ -1,0 +1,94 @@
+import RPi.GPIO as GPIO
+from keypad import keypad
+import googlemaps
+from subprocess import call
+import pprint
+import time
+from time import sleep
+import cv2
+import numpy as np
+from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
+
+cmd_beg = 'espeak -v en -k5 -s120 '
+cmd_end = ' | aplay /home/pi/Desktop/audio.wav  2>/dev/null'  
+cmd_out = '--stdout > /home/pi/Desktop/audio.wav'
+
+a = 'Welcome user, have a safe journey '
+a = a.replace(' ', '_')
+
+call([cmd_beg + cmd_out + a + cmd_end], shell=True)
+os.system("omxplayer ~/Desktop/audio.wav")
+
+GPIO.setwarnings(False)
+kp = keypad(columnCount = 3)
+kp.getKey()
+#VideoCapture
+cap = cv2.VideoCapture(0)
+
+# Define the codec and create VideoWriter object
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+out = cv2.VideoWriter('output.avi',fourcc, 30.0, (640,480))
+
+start_time_1 = time.time()
+while(cap.isOpened()):
+    ret, frame = cap.read()
+    if ret==True:
+        out.write(frame)
+        cv2.imshow('frame',frame)
+        time_diff_1 = time.time() - start_time_1
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            a = 'An accident has been detected, you have ten seconds to cancel the S O S request'
+            a = a.replace(' ', '_')
+            call([cmd_beg + cmd_out + a + cmd_end], shell=True)
+            os.system("omxplayer ~/Desktop/audio.wav")
+            start_time_2 = time.time()
+            while(True):
+                if kp.getKey()=='*':
+                    exit()
+                time_diff_2 = time.time() - start_time_2
+                ret, frame = cap.read()
+                out.write(frame)
+                if time_diff_2 >= 10:
+                    break
+            break
+    else:
+        break
+
+# Release everything if job is finished
+cap.release()
+out.release()
+cv2.destroyAllWindows()
+
+from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
+ffmpeg_extract_subclip("output.avi", time_diff_1-10, time_diff_1+10, targetname="test.mp4")
+
+'''
+##location
+gmaps = googlemaps.Client(key = 'AIzaSyDVCEYkZqhHzB5WUAM8qLFAraOAp4_YZUQ')
+places_result = gmaps.placesmipo_nearby(location = '28.6591,77.3400', open_now = True, keyword = 'hospital', type = 'hospital', rank_by = 'distance')
+pprint.pprint(places_result)
+
+##call
+import messagebird
+
+client = messagebird.Client('4ScsLLOaUc6fq7FzC2VjsKLDa')
+try:
+    msg = client.voice_message_create('+919990847111', 'hi parth', { 'voice' : 'male' })
+    print(msg.__dict__)
+except messagebird.client.ErrorException as e:
+    for error in e.errors:
+        print(error)
+
+##sms
+import requests
+url = "https://www.fast2sms.com/dev/bulk"
+payload = "sender_id=FSTSMS&message=test&language=english&route=p&numbers=9990847111"
+headers = {
+'authorization': "EF0M2fb37SOQzAU4hNI1WrunYdtjopLwilqekgcyaBPxJX85HDLN6GxSiRJknMmwa12ApDlfhsZFtzT9",
+'Content-Type': "application/x-www-form-urlencoded",
+'Cache-Control': "no-cache",
+}
+response = requests.request("POST", url, data=payload, headers=headers)
+print(response.text)
+'''
+
