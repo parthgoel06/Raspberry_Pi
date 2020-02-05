@@ -14,6 +14,7 @@ from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 import os
 from filestack import Client
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
+import six
 
 ##initialise and vid start
 GPIO.setwarnings(False)
@@ -64,21 +65,17 @@ print(filelink.url)
 
 #send sms through gsm module
 SERIAL_PORT = "/dev/ttyS0"
-ser = serial.Serial(SERIAL_PORT, baudrate = 9600, timeout = 5)
-a1 = bytes('AT+CMGF=1\r','utf-8')
-ser.write(a1)
-b1 = bytes('AT+CMGS="9899013114"\r','utf-8')
-msg1 = bytes(f'This is an EMERGENCY message!!! An accident has occurred at location and immediate medical help is required.','utf-8')
-ser.write(b1)
-ser.write(msg1)
+ser = serial.Serial(SERIAL_PORT,baudrate=9600,timeout=5)
+ser.write(b"AT+CMGF=1\r")
+ser.write(b'AT+CMGS="9990847111"\r')
+msg1 = b'This is an EMERGENCY message!!! An accident has occurred at location and immediate medical help is required.'
+ser.write(msg1+six.b(chr(26)))
 print("sms1 sent")
 
-a2 = bytes('AT+CMGF=1\r','utf-8')
-ser.write(a2)
-b2 = bytes('AT+CMGS="9899013114"\r','utf-8')
-msg2 = bytes(f'Here is a video link of the accident scenario {filelink.url}','utf-8')
-ser.write(b2)
-ser.write(msg2)
+ser.write(b"AT+CMGF=1\r")
+ser.write(b'AT+CMGS="9990847111"\r')
+msg2 = b'Here is a video link of the accident scenario {filelink.url}'
+ser.write(msg2+six.b(chr(26)))
 print("sms2 sent")
 
 '''
