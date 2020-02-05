@@ -20,10 +20,10 @@ cmd_out = '--stdout > /home/pi/Desktop/sih.wav'
 
 a = 'Welcome user have a safe journey'
 a = a.replace(' ', '_')
-
+print('rr')
 call([cmd_beg + cmd_out + a + cmd_end], shell=True)
 os.system("omxplayer ~/Desktop/sih.wav")
-
+print('rrt')
 #GPIO.setwarnings(False)
 kp = keypad(columnCount = 3)
 kp.getKey()
