@@ -20,6 +20,26 @@ import six
 import Places
 
 ##initialise and vid start
+kp = keypad(columnCount = 4)
+
+digit = None
+while digit == None:
+    digit = kp.getKey()
+
+print(digit)
+time.sleep(0.5)
+
+seq = []
+for i in range(4):
+    digit = None
+    while digit == None:
+        digit = kp.getKey()
+    seq.append(digit)
+    time.sleep(0.4)
+
+print(seq)
+if seq == [1, 2, 3, '#']:
+    print("Code accepted")
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(16, GPIO.OUT)
@@ -32,7 +52,7 @@ a = 'Welcome user have a safe journey'
 a = a.replace(' ', '_')
 call([cmd_beg + cmd_out + a + cmd_end], shell=True)
 os.system("omxplayer ~/Desktop/sih.wav")
-kp = keypad(columnCount = 3)
+kp = keypad(columnCount = 4)
 kp.getKey()
 camera = picamera.PiCamera()
 camera.start_recording("output.h264")
