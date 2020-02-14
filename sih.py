@@ -64,9 +64,9 @@ os.system("MP4Box -add output.h264 output.mp4")
 ffmpeg_extract_subclip("output.mp4", time_diff_1-10, time_diff_1+10, targetname="test.mp4")
 
 #call
-client = messagebird.Client('TKDmtvkphouI9Su9nY9IxRot5')
+client = messagebird.Client('4YKfcxjfhxPnzDIjuMb0YkE3d')
 try:
-    msg = client.voice_message_create('+919899013114', 'Emergency detected please check message', { 'voice' : 'male' })
+    msg = client.voice_message_create('+918799700769', 'Emergency detected please check message', { 'voice' : 'male' })
     print(msg.__dict__)
 except messagebird.client.ErrorException as e:
     for error in e.errors:
@@ -91,7 +91,7 @@ SERIAL_PORT = "/dev/ttyS0"
 ser = serial.Serial(SERIAL_PORT,baudrate=9600,timeout=5)
 ser.write(b"AT+CMGF=1\r")
 time.sleep(3)
-ser.write(b'AT+CMGS="9899013114"\r')
+ser.write(b'AT+CMGS="8799700769"\r')
 msg1 = bytes('Location = '+location,'utf-8')
 time.sleep(3)
 ser.write(msg1+six.b(chr(26)))
