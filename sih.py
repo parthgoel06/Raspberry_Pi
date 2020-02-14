@@ -55,13 +55,11 @@ while(True):
         break  
 
 #h264 to mp4
-os.chdir(r"/home/pi/Desktop/Raspberry_Pi")
-os.system("MP4Box -add output.h264 output.mp4")
-# command = "MP4Box -add output.h264 output.mp4"
-# call([command], shell=True)
+command = "MP4Box -add output.h264 output.mp4"
+call([command], shell=True)
 
 #crop 20 secs 
-ffmpeg_extract_subclip("output.h264", time_diff_1-10, time_diff_1+10, targetname="test.h264")
+ffmpeg_extract_subclip("output.mp4", time_diff_1-10, time_diff_1+10, targetname="test.mp4")
 
 #call
 client = messagebird.Client('4YKfcxjfhxPnzDIjuMb0YkE3d')
@@ -74,7 +72,7 @@ except messagebird.client.ErrorException as e:
 
 #upload vid file
 cli = Client('AkNi4zBJJTfmBeR8aAK6rz')
-filelink = cli.upload(filepath='test.h264')
+filelink = cli.upload(filepath='test.mp4')
 #print(filelink.url)
 url = str(filelink.url)
 print(url)
@@ -100,7 +98,7 @@ print("sms1 sent")
 
 ser.write(b"AT+CMGF=1\r")
 time.sleep(3)
-ser.write(b'AT+CMGS="9899013114"\r')
+ser.write(b'AT+CMGS="8799700769"\r')
 msg2 = bytes('video link = '+url,'utf-8')
 time.sleep(3)
 ser.write(msg2+six.b(chr(26)))
