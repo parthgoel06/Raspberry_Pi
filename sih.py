@@ -61,6 +61,15 @@ call([command], shell=True)
 #crop 20 secs 
 ffmpeg_extract_subclip("output.mp4", time_diff_1-10, time_diff_1+10, targetname="test.mp4")
 
+#call
+client = messagebird.Client('TKDmtvkphouI9Su9nY9IxRot5')
+try:
+    msg = client.voice_message_create('+919899013114', 'Emergency detected please check message', { 'voice' : 'male' })
+    print(msg.__dict__)
+except messagebird.client.ErrorException as e:
+    for error in e.errors:
+        print(error)
+
 #upload vid file
 cli = Client('AkNi4zBJJTfmBeR8aAK6rz')
 filelink = cli.upload(filepath='test.mp4')
@@ -74,14 +83,7 @@ pl.police()
 location = pl.long_lat()
 print(f"LOCATION = {location}")
 
-#call
-client = messagebird.Client('TKDmtvkphouI9Su9nY9IxRot5')
-try:
-    msg = client.voice_message_create('+919899013114', 'Emergency detected please check message', { 'voice' : 'male' })
-    print(msg.__dict__)
-except messagebird.client.ErrorException as e:
-    for error in e.errors:
-        print(error)
+
 #send sms through gsm module
 SERIAL_PORT = "/dev/ttyS0"
 ser = serial.Serial(SERIAL_PORT,baudrate=9600,timeout=5)

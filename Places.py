@@ -28,3 +28,4 @@ def Police():
     print(f"Phone Number = {details['result']['formatted_phone_number']}")
     print(f"Address = {details['result']['vicinity']}")  
 
+
