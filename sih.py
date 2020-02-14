@@ -61,7 +61,7 @@ os.system("MP4Box -add output.h264 output.mp4")
 # call([command], shell=True)
 
 #crop 20 secs 
-ffmpeg_extract_subclip("output.mp4", time_diff_1-10, time_diff_1+10, targetname="test.mp4")
+ffmpeg_extract_subclip("output.h264", time_diff_1-10, time_diff_1+10, targetname="test.h264")
 
 #call
 client = messagebird.Client('4YKfcxjfhxPnzDIjuMb0YkE3d')
@@ -74,7 +74,7 @@ except messagebird.client.ErrorException as e:
 
 #upload vid file
 cli = Client('AkNi4zBJJTfmBeR8aAK6rz')
-filelink = cli.upload(filepath='test.mp4')
+filelink = cli.upload(filepath='test.h264')
 #print(filelink.url)
 url = str(filelink.url)
 print(url)
