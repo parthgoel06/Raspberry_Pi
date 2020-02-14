@@ -20,7 +20,7 @@ import six
 import Places
 
 ##initialise and vid start
-kp = keypad(columnCount = 4)
+kp = keypad(columnCount = 3)
 
 digit = None
 while digit == None:
@@ -38,7 +38,7 @@ for i in range(4):
     time.sleep(0.4)
 
 print(seq)
-if seq == [1, 2, 3, '#']:
+if seq == [1, 2, 3, '*']:
     print("Code accepted")
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
