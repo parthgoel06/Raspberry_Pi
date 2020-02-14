@@ -55,8 +55,10 @@ while(True):
         break  
 
 #h264 to mp4
-command = "MP4Box -add output.h264 output.mp4"
-call([command], shell=True)
+os.chdir(r"/home/pi/Desktop/Raspberry_Pi")
+os.system("MP4Box -add output.h264 output.mp4")
+# command = "MP4Box -add output.h264 output.mp4"
+# call([command], shell=True)
 
 #crop 20 secs 
 ffmpeg_extract_subclip("output.mp4", time_diff_1-10, time_diff_1+10, targetname="test.mp4")
