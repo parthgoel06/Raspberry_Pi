@@ -113,9 +113,6 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 # for USB.
 
 ### Picamera ###
-
-to_detect = 'clock'
-
 if camera_type == 'picamera':
     # Initialize Picamera and grab reference to the raw capture
     camera = PiCamera()
@@ -123,6 +120,8 @@ if camera_type == 'picamera':
     camera.framerate = 10
     rawCapture = PiRGBArray(camera, size=(IM_WIDTH,IM_HEIGHT))
     rawCapture.truncate(0)
+    
+    to_detect = 'clock'
 
     for frame1 in camera.capture_continuous(rawCapture, format="bgr",use_video_port=True):
 
