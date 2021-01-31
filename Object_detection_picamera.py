@@ -113,6 +113,9 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 # for USB.
 
 ### Picamera ###
+
+to_detect = 'clock'
+
 if camera_type == 'picamera':
     # Initialize Picamera and grab reference to the raw capture
     camera = PiCamera()
@@ -139,7 +142,7 @@ if camera_type == 'picamera':
 
         # Draw the results of the detection (aka 'visulaize the results')
         try:
-            _, disp = vis_util.visualize_boxes_and_labels_on_image_array(
+            _, detected = vis_util.visualize_boxes_and_labels_on_image_array(
                 frame,
                 np.squeeze(boxes),
                 np.squeeze(classes).astype(np.int32),
@@ -149,7 +152,9 @@ if camera_type == 'picamera':
                 line_thickness=8,
                 min_score_thresh=0.40)
             
-            print(disp[0:-5])
+            print(detected[0:-5])
+            if detected[0:-5] == to_detect:
+                os.system("omxplayer ~/Desktop/audio/beep.mp3")
             
         except:
             vis_util.visualize_boxes_and_labels_on_image_array(
