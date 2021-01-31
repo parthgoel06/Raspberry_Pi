@@ -144,7 +144,21 @@ if camera_type == 'picamera':
             feed_dict={image_tensor: frame_expanded})
 
         # Draw the results of the detection (aka 'visulaize the results')
-        vis_util.visualize_boxes_and_labels_on_image_array(
+        try:
+            _, disp = vis_util.visualize_boxes_and_labels_on_image_array(
+                frame,
+                np.squeeze(boxes),
+                np.squeeze(classes).astype(np.int32),
+                np.squeeze(scores),
+                category_index,
+                use_normalized_coordinates=True,
+                line_thickness=8,
+                min_score_thresh=0.40)
+            
+            print(disp)
+            
+        except:
+            vis_util.visualize_boxes_and_labels_on_image_array(
             frame,
             np.squeeze(boxes),
             np.squeeze(classes).astype(np.int32),
@@ -153,7 +167,7 @@ if camera_type == 'picamera':
             use_normalized_coordinates=True,
             line_thickness=8,
             min_score_thresh=0.40)
-
+            
         cv2.putText(frame,"FPS: {0:.2f}".format(frame_rate_calc),(30,50),font,1,(255,255,0),2,cv2.LINE_AA)
 
         # All the results have been drawn on the frame, so it's time to display it.
