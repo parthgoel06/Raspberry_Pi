@@ -182,7 +182,7 @@ if camera_type == 'picamera':
             rawCapture.truncate(0)
     
     except KeyboardInterrupt:
-        break
+        pass
 
     camera.close()
 
